@@ -87,6 +87,7 @@
             this.StartTool = new System.Windows.Forms.ToolStripButton();
             this.StopTool = new System.Windows.Forms.ToolStripButton();
             this.RefreshBtn = new System.Windows.Forms.ToolStripButton();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.MailTab.SuspendLayout();
             this.InboxTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.InboxData)).BeginInit();
@@ -105,8 +106,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MailTab.Appearance = System.Windows.Forms.TabAppearance.Buttons;
-            this.MailTab.Controls.Add(this.InboxTab);
             this.MailTab.Controls.Add(this.OutboxTab);
+            this.MailTab.Controls.Add(this.InboxTab);
             this.MailTab.Controls.Add(this.ScanTab);
             this.MailTab.Controls.Add(this.SettingsTab);
             this.MailTab.ImageList = this.IconsList;
@@ -301,6 +302,7 @@
             this.FilesToSendList.AllowDrop = true;
             this.FilesToSendList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.FilesToSendList.ContextMenuStrip = this.contextMenuStrip1;
             this.FilesToSendList.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FilesToSendList.ForeColor = System.Drawing.Color.Black;
             this.FilesToSendList.FormattingEnabled = true;
@@ -738,6 +740,11 @@
             this.RefreshBtn.Text = "Refresh";
             this.RefreshBtn.Click += new System.EventHandler(this.RefreshBtn_Click);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -832,6 +839,7 @@
         private System.Windows.Forms.Label From;
         private System.Windows.Forms.TextBox FromInbox;
         private System.Windows.Forms.Label To;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
 

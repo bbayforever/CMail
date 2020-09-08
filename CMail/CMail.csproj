@@ -36,6 +36,9 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="asprise-scan-scanner-twain-wia-api, Version=12.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\asprise-scan-scanner-twain-wia-api.12.0.0.0\lib\net40\asprise-scan-scanner-twain-wia-api.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -118,7 +121,11 @@
     <None Include="Resources\reload.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="asprise_imaging.dll" />
+    <Content Include="asprise_imaging_x64.dll" />
     <Content Include="icon.ico" />
+    <Content Include="ReadMe-AspriseScan.txt" />
+    <Content Include="Resources\asprise.ico" />
     <None Include="Resources\export.png" />
     <None Include="Resources\import1.png" />
     <None Include="Resources\import.png" />

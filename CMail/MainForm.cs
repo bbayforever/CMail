@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Linq;
 using System.ServiceProcess;
+using System.Text.RegularExpressions;
 using WIA;
 
 namespace CMail
@@ -41,6 +42,7 @@ namespace CMail
                 FileInfo fileInfo = new FileInfo(file);
                 FilesToSendList.Items.Add(fileInfo.Name);
             }
+
         }
 
         public void Watch(string path, bool isInbox)
@@ -81,9 +83,9 @@ namespace CMail
             if (!IsFileLocked(CreatedFile) && CreatedFile.Extension.ToLower() != ".tmp")
             {
                 FillDataGrid(CreatedFile, true);
-                File.Copy(e.FullPath, currDateDirectory1 + e.Name, true);
-                File.Copy(e.FullPath, currDateDirectory2 + e.Name, true);
-                File.Delete(e.FullPath);
+                System.IO.File.Copy(e.FullPath, currDateDirectory1 + e.Name, true);
+                System.IO.File.Copy(e.FullPath, currDateDirectory2 + e.Name, true);
+                System.IO.File.Delete(e.FullPath);
             }
         }
 
@@ -152,10 +154,10 @@ namespace CMail
                 FileInfo fileInfo = new FileInfo(file);
                 if (!IsFileLocked(fileInfo))
                 {
-                    File.Copy(file, dest1, true);
-                    File.Copy(file, dest2, true);
+                    System.IO.File.Copy(file, dest1, true);
+                    System.IO.File.Copy(file, dest2, true);
                     FillDataGrid(fileInfo, true);
-                    File.Delete(file);
+                    System.IO.File.Delete(file);
                 }
             }
             string[] folders = Directory.GetDirectories(sourceFolder);
@@ -227,7 +229,7 @@ namespace CMail
                             "",
                             file.Name,
                             "",
-                            File.GetAccessControl(file.FullName).GetOwner(typeof(System.Security.Principal.NTAccount)).ToString(),
+                            System.IO.File.GetAccessControl(file.FullName).GetOwner(typeof(System.Security.Principal.NTAccount)).ToString(),
                             "");
                         OutboxData.Sort(TimeOutbox, ListSortDirection.Ascending);
                     }));
@@ -414,7 +416,7 @@ namespace CMail
 
         public static string NextAvailableFilename(string path)
         {
-            if (!File.Exists(path))
+            if (!System.IO.File.Exists(path))
                 return path;
 
             if (Path.HasExtension(path))
@@ -431,12 +433,12 @@ namespace CMail
             if (tmp == pattern)
                 throw new ArgumentException("The pattern must include an index place-holder", "pattern");
 
-            if (!File.Exists(tmp))
+            if (!System.IO.File.Exists(tmp))
                 return tmp;
 
             int min = 1, max = 2;
 
-            while (File.Exists(string.Format(pattern, max)))
+            while (System.IO.File.Exists(string.Format(pattern, max)))
             {
                 min = max;
                 max *= 2;
@@ -445,7 +447,7 @@ namespace CMail
             while (max != min + 1)
             {
                 int pivot = (max + min) / 2;
-                if (File.Exists(string.Format(pattern, pivot)))
+                if (System.IO.File.Exists(string.Format(pattern, pivot)))
                     min = pivot;
                 else
                     max = pivot;
@@ -518,7 +520,7 @@ namespace CMail
             string extension = Path.GetExtension(fullPath);
             string path = Path.GetDirectoryName(fullPath);
             string newFullPath = fullPath;
-            while (File.Exists(newFullPath))
+            while (System.IO.File.Exists(newFullPath))
             {
                 string tempFileName = fileNameOnly.Remove(7, 1).Insert(7, count++.ToString());
                 newFullPath = Path.Combine(path, tempFileName + extension);
@@ -543,7 +545,7 @@ namespace CMail
         {
             string fileCode = " ";
 
-                string filename = path;
+                  string filename = path;
                 int counter = 1;
                 string extension = Path.GetExtension(filename);
                 if (extension == ".jpg" || extension == ".pdf")
@@ -574,7 +576,7 @@ namespace CMail
                                     counter.ToString() +
                                     ".05" + extension;
                     }
-                    File.Copy(filename, RenameExistedFile(outboxPath + fileCode));
+            System.IO.File.Copy(filename, RenameExistedFile(outboxPath + fileCode));
         }
 
         private void SendOutbox(string fileName)
@@ -584,7 +586,7 @@ namespace CMail
                 string path = outboxPath + fileName;
                 string copyPath = tmailPath + @"Notkill\" + fileName;
 
-                if (File.Exists(copyPath))
+                if (System.IO.File.Exists(copyPath))
                 {
                     DialogResult dialogResult = MessageBox.Show("A file " + fileName + " with the same name already exists. Replace? ", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (dialogResult == DialogResult.No)
@@ -593,11 +595,11 @@ namespace CMail
                     }
                 }
 
-                File.Copy(path, copyPath, true);
+                System.IO.File.Copy(path, copyPath, true);
                 FileInfo fileInfo = new FileInfo(copyPath);
                 FillDataGrid(fileInfo, false);
-                File.Copy(path, tmailPath + Path.GetFileName(copyPath), true);
-                File.Delete(path);
+                System.IO.File.Copy(path, tmailPath + Path.GetFileName(copyPath), true);
+                System.IO.File.Delete(path);
             }
         }
 
