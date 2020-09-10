@@ -27,9 +27,6 @@ namespace CMail
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            ListScanners();
-            ExtensionsComboBox.SelectedIndex = 1;
-            ScannerList.SelectedIndex = 0;
             departmentNum.SelectedIndex = 0;
         }
 
@@ -80,7 +77,10 @@ namespace CMail
             string currDateDirectory1 = ToTextBox1.Text + DateTime.Now.ToString("dd-MM") + @"\";
             string currDateDirectory2 = ToTextBox2.Text;
             FileInfo CreatedFile = new FileInfo(e.FullPath);
-            if (!IsFileLocked(CreatedFile) && CreatedFile.Extension.ToLower() != ".tmp")
+            if (!IsFileLocked(CreatedFile) && CreatedFile.Extension.ToLower() != ".tmp" &&
+                CreatedFile.Length != 0 &&
+                !File.GetAttributes(e.FullPath).HasFlag(FileAttributes.Hidden) &&
+                !File.GetAttributes(e.FullPath).HasFlag(FileAttributes.System))
             {
                 FillDataGrid(CreatedFile, true);
                 System.IO.File.Copy(e.FullPath, currDateDirectory1 + e.Name, true);
@@ -177,9 +177,6 @@ namespace CMail
                     break;
                 case "OutboxTab":
                     OutboxData.Rows.Clear();
-                    break;
-                case "ScanTab":
-                    ScanPicture.Image = null;
                     break;
                 default:
                     break;
@@ -327,93 +324,7 @@ namespace CMail
             }
         }
 
-        private void ListScanners()
-        {
-            ScannerList.Items.Clear();
-            var deviceManager = new DeviceManager();
-            for (int i = 1; i <= deviceManager.DeviceInfos.Count; i++)
-            {
-                if (deviceManager.DeviceInfos[i].Type != WiaDeviceType.ScannerDeviceType)
-                {
-                    continue;
-                }
-                ScannerList.Items.Add(new Scanner(deviceManager.DeviceInfos[i]));
-            }
-        }
-
-        public void StartScanning()
-        {
-            Scanner device = null;
-
-            this.Invoke(new MethodInvoker(delegate ()
-            {
-                device = ScannerList.SelectedItem as Scanner;
-            }));
-
-            if (device == null)
-            {
-                MessageBox.Show("You need to select first an scanner device from the list",
-                                "Warning",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            else if (String.IsNullOrEmpty(OutputScanPath.Text))
-            {
-                MessageBox.Show("Provide a filename",
-                                "Warning",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            ImageFile image = new ImageFile();
-            string imageExtension = "";
-
-            this.Invoke(new MethodInvoker(delegate ()
-            {
-                switch (ExtensionsComboBox.SelectedIndex)
-                {
-                    case 0:
-                        image = device.ScanPNG();
-                        imageExtension = ".png";
-                        break;
-                    case 1:
-                        image = device.ScanJPEG();
-                        imageExtension = ".jpg";
-                        break;
-                    case 2:
-                        image = device.ScanTIFF();
-                        imageExtension = ".tiff";
-                        break;
-                }
-            }));
-
-            var path = Path.Combine(OutputScanPath.Text, FileNameScan.Text + imageExtension);
-            path = NextAvailableFilename(path);
-            image.SaveFile(path);
-            if (DVCheckBox.Checked)
-            {
-                image.SaveFile(@"m:\POST\Inbox\" + FileNameScan.Text + imageExtension);
-            }
-            ScanPicture.Image = new Bitmap(path);
-        }
-
-        private void FolderScanBtn_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog folderDlg = new FolderBrowserDialog();
-            folderDlg.ShowNewFolderButton = true;
-            DialogResult result = folderDlg.ShowDialog();
-
-            if (result == DialogResult.OK)
-            {
-                OutputScanPath.Text = folderDlg.SelectedPath;
-            }
-        }
-
-        private void ScanBtn_Click(object sender, EventArgs e)
-        {
-            Task.Factory.StartNew(StartScanning);
-        }
-
+    
         public static string NextAvailableFilename(string path)
         {
             if (!System.IO.File.Exists(path))
@@ -544,39 +455,38 @@ namespace CMail
         private void UploadOutbox(string path)
         {
             string fileCode = " ";
-
-                  string filename = path;
-                int counter = 1;
-                string extension = Path.GetExtension(filename);
-                if (extension == ".jpg" || extension == ".pdf")
+            string filename = path;
+            int counter = 1;
+            string extension = Path.GetExtension(filename);
+            if (extension == ".jpg" || extension == ".pdf")
                     {
                         fileCode = "g" + departmentNum.SelectedItem +
                                     DateTime.Now.ToString("ddMM") +
                                     counter.ToString() +
                                     ".05" + extension;
                     }
-                    else if (extension == ".doc" || extension == ".docx")
+            else if (extension == ".doc" || extension == ".docx")
                     {
                         fileCode = "d" + departmentNum.SelectedItem +
                                     DateTime.Now.ToString("ddMM") +
                                     counter.ToString() +
                                     ".05" + extension;
                     }
-                    else if (extension == ".xls" || extension == ".xlsx")
+            else if (extension == ".xls" || extension == ".xlsx")
                     {
                         fileCode = "t" + departmentNum.SelectedItem +
                                     DateTime.Now.ToString("ddMM") +
                                     counter.ToString() +
                                     ".05" + extension;
                     }
-                    else if (extension == ".rar" || extension == ".zip")
+            else if (extension == ".rar" || extension == ".zip")
                     {
                         fileCode = "a" + departmentNum.SelectedItem +
                                     DateTime.Now.ToString("ddMM") +
                                     counter.ToString() +
                                     ".05" + extension;
                     }
-            System.IO.File.Copy(filename, RenameExistedFile(outboxPath + fileCode));
+            File.Copy(filename, RenameExistedFile(outboxPath + fileCode));
         }
 
         private void SendOutbox(string fileName)

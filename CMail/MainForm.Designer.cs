@@ -31,6 +31,21 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MailTab = new System.Windows.Forms.TabControl();
+            this.OutboxTab = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
+            this.departmentNum = new System.Windows.Forms.ComboBox();
+            this.SendAllBtn = new System.Windows.Forms.Button();
+            this.uploadBtn = new System.Windows.Forms.Button();
+            this.FilesToSendList = new System.Windows.Forms.ListBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.OutboxData = new System.Windows.Forms.DataGridView();
+            this.DateOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TimeOutbox = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IndexOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FilenameOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Department = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SenderName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AboutOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.InboxTab = new System.Windows.Forms.TabPage();
             this.InboxData = new System.Windows.Forms.DataGridView();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -42,33 +57,6 @@
             this.FileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FileSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OutboxTab = new System.Windows.Forms.TabPage();
-            this.label4 = new System.Windows.Forms.Label();
-            this.departmentNum = new System.Windows.Forms.ComboBox();
-            this.SendAllBtn = new System.Windows.Forms.Button();
-            this.uploadBtn = new System.Windows.Forms.Button();
-            this.FilesToSendList = new System.Windows.Forms.ListBox();
-            this.OutboxData = new System.Windows.Forms.DataGridView();
-            this.DateOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TimeOutbox = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IndexOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FilenameOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Department = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SenderName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AboutOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ScanTab = new System.Windows.Forms.TabPage();
-            this.FileNameScan = new System.Windows.Forms.TextBox();
-            this.DVCheckBox = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.ScanBtn = new System.Windows.Forms.Button();
-            this.ExtensionsComboBox = new System.Windows.Forms.ComboBox();
-            this.FolderScanBtn = new System.Windows.Forms.Button();
-            this.OutputScanPath = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.OutputFolderScanLabel = new System.Windows.Forms.Label();
-            this.ScanPicture = new System.Windows.Forms.PictureBox();
-            this.ScannerList = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.SettingsTab = new System.Windows.Forms.TabPage();
             this.ToTextBox1 = new System.Windows.Forms.TextBox();
             this.ToTextBox2 = new System.Windows.Forms.TextBox();
@@ -87,17 +75,17 @@
             this.StartTool = new System.Windows.Forms.ToolStripButton();
             this.StopTool = new System.Windows.Forms.ToolStripButton();
             this.RefreshBtn = new System.Windows.Forms.ToolStripButton();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.NetFolderTab = new System.Windows.Forms.TabPage();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.MailTab.SuspendLayout();
-            this.InboxTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.InboxData)).BeginInit();
             this.OutboxTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OutboxData)).BeginInit();
-            this.ScanTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ScanPicture)).BeginInit();
+            this.InboxTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.InboxData)).BeginInit();
             this.SettingsTab.SuspendLayout();
             this.MainMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.NetFolderTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // MailTab
@@ -108,7 +96,7 @@
             this.MailTab.Appearance = System.Windows.Forms.TabAppearance.Buttons;
             this.MailTab.Controls.Add(this.OutboxTab);
             this.MailTab.Controls.Add(this.InboxTab);
-            this.MailTab.Controls.Add(this.ScanTab);
+            this.MailTab.Controls.Add(this.NetFolderTab);
             this.MailTab.Controls.Add(this.SettingsTab);
             this.MailTab.ImageList = this.IconsList;
             this.MailTab.ItemSize = new System.Drawing.Size(100, 50);
@@ -117,100 +105,6 @@
             this.MailTab.SelectedIndex = 0;
             this.MailTab.Size = new System.Drawing.Size(1309, 629);
             this.MailTab.TabIndex = 4;
-            // 
-            // InboxTab
-            // 
-            this.InboxTab.BackColor = System.Drawing.Color.GhostWhite;
-            this.InboxTab.Controls.Add(this.InboxData);
-            this.InboxTab.ImageKey = "download.png";
-            this.InboxTab.Location = new System.Drawing.Point(4, 54);
-            this.InboxTab.Name = "InboxTab";
-            this.InboxTab.Padding = new System.Windows.Forms.Padding(3);
-            this.InboxTab.Size = new System.Drawing.Size(1301, 571);
-            this.InboxTab.TabIndex = 0;
-            this.InboxTab.Text = "Inbox";
-            // 
-            // InboxData
-            // 
-            this.InboxData.AllowUserToResizeColumns = false;
-            this.InboxData.AllowUserToResizeRows = false;
-            this.InboxData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.InboxData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.InboxData.BackgroundColor = System.Drawing.Color.GhostWhite;
-            this.InboxData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.InboxData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Date,
-            this.EmptyColumn,
-            this.FileDate,
-            this.Index,
-            this.About,
-            this.Terms,
-            this.FileName,
-            this.Time,
-            this.FileSize});
-            this.InboxData.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.InboxData.Location = new System.Drawing.Point(4, 8);
-            this.InboxData.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.InboxData.Name = "InboxData";
-            this.InboxData.RowHeadersWidth = 51;
-            this.InboxData.Size = new System.Drawing.Size(1288, 551);
-            this.InboxData.TabIndex = 0;
-            // 
-            // Date
-            // 
-            this.Date.HeaderText = "Date of receiving";
-            this.Date.MinimumWidth = 6;
-            this.Date.Name = "Date";
-            // 
-            // EmptyColumn
-            // 
-            this.EmptyColumn.HeaderText = "";
-            this.EmptyColumn.MinimumWidth = 6;
-            this.EmptyColumn.Name = "EmptyColumn";
-            // 
-            // FileDate
-            // 
-            this.FileDate.HeaderText = "Date of creation";
-            this.FileDate.MinimumWidth = 6;
-            this.FileDate.Name = "FileDate";
-            // 
-            // Index
-            // 
-            this.Index.HeaderText = "Index";
-            this.Index.MinimumWidth = 6;
-            this.Index.Name = "Index";
-            // 
-            // About
-            // 
-            this.About.HeaderText = "About";
-            this.About.MinimumWidth = 6;
-            this.About.Name = "About";
-            // 
-            // Terms
-            // 
-            this.Terms.HeaderText = "Terms";
-            this.Terms.MinimumWidth = 6;
-            this.Terms.Name = "Terms";
-            // 
-            // FileName
-            // 
-            this.FileName.HeaderText = "Filename";
-            this.FileName.MinimumWidth = 6;
-            this.FileName.Name = "FileName";
-            // 
-            // Time
-            // 
-            this.Time.HeaderText = "Time";
-            this.Time.MinimumWidth = 6;
-            this.Time.Name = "Time";
-            // 
-            // FileSize
-            // 
-            this.FileSize.HeaderText = "Size";
-            this.FileSize.MinimumWidth = 6;
-            this.FileSize.Name = "FileSize";
             // 
             // OutboxTab
             // 
@@ -314,6 +208,11 @@
             this.FilesToSendList.DragEnter += new System.Windows.Forms.DragEventHandler(this.FilesToSendList_DragEnter);
             this.FilesToSendList.DoubleClick += new System.EventHandler(this.FilesToSendList_DoubleClick);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
             // OutboxData
             // 
             this.OutboxData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -374,150 +273,99 @@
             this.AboutOut.HeaderText = "About";
             this.AboutOut.Name = "AboutOut";
             // 
-            // ScanTab
+            // InboxTab
             // 
-            this.ScanTab.BackColor = System.Drawing.Color.GhostWhite;
-            this.ScanTab.Controls.Add(this.FileNameScan);
-            this.ScanTab.Controls.Add(this.DVCheckBox);
-            this.ScanTab.Controls.Add(this.label2);
-            this.ScanTab.Controls.Add(this.ScanBtn);
-            this.ScanTab.Controls.Add(this.ExtensionsComboBox);
-            this.ScanTab.Controls.Add(this.FolderScanBtn);
-            this.ScanTab.Controls.Add(this.OutputScanPath);
-            this.ScanTab.Controls.Add(this.label3);
-            this.ScanTab.Controls.Add(this.OutputFolderScanLabel);
-            this.ScanTab.Controls.Add(this.ScanPicture);
-            this.ScanTab.Controls.Add(this.ScannerList);
-            this.ScanTab.Controls.Add(this.label1);
-            this.ScanTab.ImageKey = "scanner.png";
-            this.ScanTab.Location = new System.Drawing.Point(4, 54);
-            this.ScanTab.Name = "ScanTab";
-            this.ScanTab.Size = new System.Drawing.Size(1301, 571);
-            this.ScanTab.TabIndex = 2;
-            this.ScanTab.Text = "Scan";
+            this.InboxTab.BackColor = System.Drawing.Color.GhostWhite;
+            this.InboxTab.Controls.Add(this.InboxData);
+            this.InboxTab.ImageKey = "download.png";
+            this.InboxTab.Location = new System.Drawing.Point(4, 54);
+            this.InboxTab.Name = "InboxTab";
+            this.InboxTab.Padding = new System.Windows.Forms.Padding(3);
+            this.InboxTab.Size = new System.Drawing.Size(1301, 571);
+            this.InboxTab.TabIndex = 0;
+            this.InboxTab.Text = "Inbox";
             // 
-            // FileNameScan
+            // InboxData
             // 
-            this.FileNameScan.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.FileNameScan.Location = new System.Drawing.Point(4, 210);
-            this.FileNameScan.Name = "FileNameScan";
-            this.FileNameScan.Size = new System.Drawing.Size(151, 26);
-            this.FileNameScan.TabIndex = 11;
-            this.FileNameScan.Text = "Scan";
-            // 
-            // DVCheckBox
-            // 
-            this.DVCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.DVCheckBox.Location = new System.Drawing.Point(169, 210);
-            this.DVCheckBox.Name = "DVCheckBox";
-            this.DVCheckBox.Size = new System.Drawing.Size(48, 26);
-            this.DVCheckBox.TabIndex = 10;
-            this.DVCheckBox.Text = "303";
-            this.DVCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 239);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 20);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Extension";
-            // 
-            // ScanBtn
-            // 
-            this.ScanBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ScanBtn.Font = new System.Drawing.Font("Arial Narrow", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ScanBtn.Location = new System.Drawing.Point(12, 319);
-            this.ScanBtn.Name = "ScanBtn";
-            this.ScanBtn.Size = new System.Drawing.Size(272, 135);
-            this.ScanBtn.TabIndex = 7;
-            this.ScanBtn.Text = "SCAN";
-            this.ScanBtn.UseVisualStyleBackColor = true;
-            this.ScanBtn.Click += new System.EventHandler(this.ScanBtn_Click);
-            // 
-            // ExtensionsComboBox
-            // 
-            this.ExtensionsComboBox.FormattingEnabled = true;
-            this.ExtensionsComboBox.Items.AddRange(new object[] {
-            "PNG",
-            "JPEG",
-            "TIFF"});
-            this.ExtensionsComboBox.Location = new System.Drawing.Point(4, 262);
-            this.ExtensionsComboBox.Name = "ExtensionsComboBox";
-            this.ExtensionsComboBox.Size = new System.Drawing.Size(151, 28);
-            this.ExtensionsComboBox.TabIndex = 5;
-            // 
-            // FolderScanBtn
-            // 
-            this.FolderScanBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.FolderScanBtn.Location = new System.Drawing.Point(169, 154);
-            this.FolderScanBtn.Name = "FolderScanBtn";
-            this.FolderScanBtn.Size = new System.Drawing.Size(115, 26);
-            this.FolderScanBtn.TabIndex = 4;
-            this.FolderScanBtn.Text = "Choose folder...";
-            this.FolderScanBtn.UseVisualStyleBackColor = true;
-            this.FolderScanBtn.Click += new System.EventHandler(this.FolderScanBtn_Click);
-            // 
-            // OutputScanPath
-            // 
-            this.OutputScanPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.OutputScanPath.Enabled = false;
-            this.OutputScanPath.Location = new System.Drawing.Point(4, 155);
-            this.OutputScanPath.Name = "OutputScanPath";
-            this.OutputScanPath.Size = new System.Drawing.Size(155, 26);
-            this.OutputScanPath.TabIndex = 3;
-            this.OutputScanPath.Text = "D:\\Почта\\";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(0, 184);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(68, 20);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "File name";
-            // 
-            // OutputFolderScanLabel
-            // 
-            this.OutputFolderScanLabel.AutoSize = true;
-            this.OutputFolderScanLabel.Location = new System.Drawing.Point(0, 132);
-            this.OutputFolderScanLabel.Name = "OutputFolderScanLabel";
-            this.OutputFolderScanLabel.Size = new System.Drawing.Size(85, 20);
-            this.OutputFolderScanLabel.TabIndex = 2;
-            this.OutputFolderScanLabel.Text = "Output folder";
-            // 
-            // ScanPicture
-            // 
-            this.ScanPicture.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.InboxData.AllowUserToResizeColumns = false;
+            this.InboxData.AllowUserToResizeRows = false;
+            this.InboxData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ScanPicture.BackColor = System.Drawing.Color.Silver;
-            this.ScanPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ScanPicture.Location = new System.Drawing.Point(306, 16);
-            this.ScanPicture.Name = "ScanPicture";
-            this.ScanPicture.Size = new System.Drawing.Size(919, 456);
-            this.ScanPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ScanPicture.TabIndex = 6;
-            this.ScanPicture.TabStop = false;
+            this.InboxData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.InboxData.BackgroundColor = System.Drawing.Color.GhostWhite;
+            this.InboxData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.InboxData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Date,
+            this.EmptyColumn,
+            this.FileDate,
+            this.Index,
+            this.About,
+            this.Terms,
+            this.FileName,
+            this.Time,
+            this.FileSize});
+            this.InboxData.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.InboxData.Location = new System.Drawing.Point(4, 8);
+            this.InboxData.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.InboxData.Name = "InboxData";
+            this.InboxData.RowHeadersWidth = 51;
+            this.InboxData.Size = new System.Drawing.Size(1288, 551);
+            this.InboxData.TabIndex = 0;
             // 
-            // ScannerList
+            // Date
             // 
-            this.ScannerList.FormattingEnabled = true;
-            this.ScannerList.ItemHeight = 20;
-            this.ScannerList.Location = new System.Drawing.Point(4, 40);
-            this.ScannerList.Name = "ScannerList";
-            this.ScannerList.Size = new System.Drawing.Size(240, 84);
-            this.ScannerList.TabIndex = 1;
+            this.Date.HeaderText = "Date of receiving";
+            this.Date.MinimumWidth = 6;
+            this.Date.Name = "Date";
             // 
-            // label1
+            // EmptyColumn
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(102, 20);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "List of scanners";
+            this.EmptyColumn.HeaderText = "";
+            this.EmptyColumn.MinimumWidth = 6;
+            this.EmptyColumn.Name = "EmptyColumn";
+            // 
+            // FileDate
+            // 
+            this.FileDate.HeaderText = "Date of creation";
+            this.FileDate.MinimumWidth = 6;
+            this.FileDate.Name = "FileDate";
+            // 
+            // Index
+            // 
+            this.Index.HeaderText = "Index";
+            this.Index.MinimumWidth = 6;
+            this.Index.Name = "Index";
+            // 
+            // About
+            // 
+            this.About.HeaderText = "About";
+            this.About.MinimumWidth = 6;
+            this.About.Name = "About";
+            // 
+            // Terms
+            // 
+            this.Terms.HeaderText = "Terms";
+            this.Terms.MinimumWidth = 6;
+            this.Terms.Name = "Terms";
+            // 
+            // FileName
+            // 
+            this.FileName.HeaderText = "Filename";
+            this.FileName.MinimumWidth = 6;
+            this.FileName.Name = "FileName";
+            // 
+            // Time
+            // 
+            this.Time.HeaderText = "Time";
+            this.Time.MinimumWidth = 6;
+            this.Time.Name = "Time";
+            // 
+            // FileSize
+            // 
+            this.FileSize.HeaderText = "Size";
+            this.FileSize.MinimumWidth = 6;
+            this.FileSize.Name = "FileSize";
             // 
             // SettingsTab
             // 
@@ -740,10 +588,24 @@
             this.RefreshBtn.Text = "Refresh";
             this.RefreshBtn.Click += new System.EventHandler(this.RefreshBtn_Click);
             // 
-            // contextMenuStrip1
+            // NetFolderTab
             // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            this.NetFolderTab.Controls.Add(this.listBox1);
+            this.NetFolderTab.Location = new System.Drawing.Point(4, 54);
+            this.NetFolderTab.Name = "NetFolderTab";
+            this.NetFolderTab.Size = new System.Drawing.Size(1301, 571);
+            this.NetFolderTab.TabIndex = 4;
+            this.NetFolderTab.Text = "Net Folders";
+            this.NetFolderTab.UseVisualStyleBackColor = true;
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 20;
+            this.listBox1.Location = new System.Drawing.Point(3, 3);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(1290, 564);
+            this.listBox1.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -762,20 +624,18 @@
             this.Text = "Mail";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.MailTab.ResumeLayout(false);
-            this.InboxTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.InboxData)).EndInit();
             this.OutboxTab.ResumeLayout(false);
             this.OutboxTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OutboxData)).EndInit();
-            this.ScanTab.ResumeLayout(false);
-            this.ScanTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ScanPicture)).EndInit();
+            this.InboxTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.InboxData)).EndInit();
             this.SettingsTab.ResumeLayout(false);
             this.SettingsTab.PerformLayout();
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.NetFolderTab.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -801,19 +661,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Department;
         private System.Windows.Forms.DataGridViewTextBoxColumn SenderName;
         private System.Windows.Forms.DataGridViewTextBoxColumn AboutOut;
-        private System.Windows.Forms.TabPage ScanTab;
-        private System.Windows.Forms.Button ScanBtn;
-        private System.Windows.Forms.PictureBox ScanPicture;
-        private System.Windows.Forms.ComboBox ExtensionsComboBox;
-        private System.Windows.Forms.Button FolderScanBtn;
-        private System.Windows.Forms.TextBox OutputScanPath;
-        private System.Windows.Forms.Label OutputFolderScanLabel;
-        private System.Windows.Forms.ListBox ScannerList;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox DVCheckBox;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox FileNameScan;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton StartTool;
         private System.Windows.Forms.ToolStripButton StopTool;
@@ -840,6 +687,8 @@
         private System.Windows.Forms.TextBox FromInbox;
         private System.Windows.Forms.Label To;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.TabPage NetFolderTab;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 
