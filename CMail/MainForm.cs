@@ -7,7 +7,11 @@ using System.IO;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text.RegularExpressions;
-using WIA;
+using System.DirectoryServices;
+using System.Diagnostics;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace CMail
 {
@@ -17,6 +21,7 @@ namespace CMail
         private static string numberPattern = "{0}";
         private static string outboxPath = @"d:\Почта\!ОТПРАВКА НА ЛУГАНСК\";
         private static string tmailPath = @"C:\t-mailip\BOXES\V8001000.00\";
+        public List<Computers> DeserializedComputers { get; set; }
         public MainForm()
         {
             InitializeComponent();
@@ -28,6 +33,7 @@ namespace CMail
         private void MainForm_Load(object sender, EventArgs e)
         {
             departmentNum.SelectedIndex = 0;
+            InitNetDirectory();
         }
 
         private void OutboxFilesScan()
@@ -324,7 +330,7 @@ namespace CMail
             }
         }
 
-    
+
         public static string NextAvailableFilename(string path)
         {
             if (!System.IO.File.Exists(path))
@@ -459,33 +465,33 @@ namespace CMail
             int counter = 1;
             string extension = Path.GetExtension(filename);
             if (extension == ".jpg" || extension == ".pdf")
-                    {
-                        fileCode = "g" + departmentNum.SelectedItem +
-                                    DateTime.Now.ToString("ddMM") +
-                                    counter.ToString() +
-                                    ".05" + extension;
-                    }
+            {
+                fileCode = "g" + departmentNum.SelectedItem +
+                            DateTime.Now.ToString("ddMM") +
+                            counter.ToString() +
+                            ".05" + extension;
+            }
             else if (extension == ".doc" || extension == ".docx")
-                    {
-                        fileCode = "d" + departmentNum.SelectedItem +
-                                    DateTime.Now.ToString("ddMM") +
-                                    counter.ToString() +
-                                    ".05" + extension;
-                    }
+            {
+                fileCode = "d" + departmentNum.SelectedItem +
+                            DateTime.Now.ToString("ddMM") +
+                            counter.ToString() +
+                            ".05" + extension;
+            }
             else if (extension == ".xls" || extension == ".xlsx")
-                    {
-                        fileCode = "t" + departmentNum.SelectedItem +
-                                    DateTime.Now.ToString("ddMM") +
-                                    counter.ToString() +
-                                    ".05" + extension;
-                    }
+            {
+                fileCode = "t" + departmentNum.SelectedItem +
+                            DateTime.Now.ToString("ddMM") +
+                            counter.ToString() +
+                            ".05" + extension;
+            }
             else if (extension == ".rar" || extension == ".zip")
-                    {
-                        fileCode = "a" + departmentNum.SelectedItem +
-                                    DateTime.Now.ToString("ddMM") +
-                                    counter.ToString() +
-                                    ".05" + extension;
-                    }
+            {
+                fileCode = "a" + departmentNum.SelectedItem +
+                            DateTime.Now.ToString("ddMM") +
+                            counter.ToString() +
+                            ".05" + extension;
+            }
             File.Copy(filename, RenameExistedFile(outboxPath + fileCode));
         }
 
@@ -515,11 +521,16 @@ namespace CMail
 
         private void SendAllBtn_Click(object sender, EventArgs e)
         {
-            foreach (var item in FilesToSendList.Items)
+            string[] filesToSend = new string[FilesToSendList.Items.Count];
+            for (int i = 0; i < filesToSend.Length; i++)
             {
-                SendOutbox(item.ToString());
+                filesToSend[i] = FilesToSendList.Items[i].ToString();
             }
 
+            foreach (string fl in filesToSend)
+            {
+                SendOutbox(fl);
+            }
         }
 
         private void FilesToSendList_DragDrop(object sender, DragEventArgs e)
@@ -533,6 +544,43 @@ namespace CMail
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Move;
         }
 
+        private void InitNetDirectory()
+        {
+            using (StreamReader sr = new StreamReader(@"d:\computers.json"))
+            {
+                string json = sr.ReadToEnd();
+                DeserializedComputers = JsonConvert.DeserializeObject<List<Computers>>(json);
+            }
+            foreach (var cmp in DeserializedComputers)
+            {
+                NetDirectoryList.Items.Add(cmp.Name);
+            }
+
+        }
+
+        private void NetDirectoryList_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                OpenFolder(NetDirectoryList.SelectedItem.ToString());
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+
+                MessageBox.Show("Network path not found.",
+                "Error",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+            }
+            
+        }
+
+        private void OpenFolder(string computerName)
+        {
+            Process.Start(@"\\" + Dns.GetHostEntry(computerName).AddressList.Where(ip =>
+                            ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToList()[0].ToString());
+
+        }
     }
 }
 

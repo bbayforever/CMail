@@ -57,6 +57,8 @@
             this.FileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FileSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NetFolderTab = new System.Windows.Forms.TabPage();
+            this.NetDirectoryList = new System.Windows.Forms.ListBox();
             this.SettingsTab = new System.Windows.Forms.TabPage();
             this.ToTextBox1 = new System.Windows.Forms.TextBox();
             this.ToTextBox2 = new System.Windows.Forms.TextBox();
@@ -75,17 +77,15 @@
             this.StartTool = new System.Windows.Forms.ToolStripButton();
             this.StopTool = new System.Windows.Forms.ToolStripButton();
             this.RefreshBtn = new System.Windows.Forms.ToolStripButton();
-            this.NetFolderTab = new System.Windows.Forms.TabPage();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.MailTab.SuspendLayout();
             this.OutboxTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OutboxData)).BeginInit();
             this.InboxTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.InboxData)).BeginInit();
+            this.NetFolderTab.SuspendLayout();
             this.SettingsTab.SuspendLayout();
             this.MainMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.NetFolderTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // MailTab
@@ -367,6 +367,34 @@
             this.FileSize.MinimumWidth = 6;
             this.FileSize.Name = "FileSize";
             // 
+            // NetFolderTab
+            // 
+            this.NetFolderTab.Controls.Add(this.NetDirectoryList);
+            this.NetFolderTab.ImageKey = "diagram.png";
+            this.NetFolderTab.Location = new System.Drawing.Point(4, 54);
+            this.NetFolderTab.Name = "NetFolderTab";
+            this.NetFolderTab.Size = new System.Drawing.Size(1301, 571);
+            this.NetFolderTab.TabIndex = 4;
+            this.NetFolderTab.Text = "Network";
+            this.NetFolderTab.UseVisualStyleBackColor = true;
+            // 
+            // NetDirectoryList
+            // 
+            this.NetDirectoryList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.NetDirectoryList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NetDirectoryList.ColumnWidth = 200;
+            this.NetDirectoryList.Font = new System.Drawing.Font("Arial Narrow", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.NetDirectoryList.FormattingEnabled = true;
+            this.NetDirectoryList.ItemHeight = 29;
+            this.NetDirectoryList.Location = new System.Drawing.Point(3, 3);
+            this.NetDirectoryList.MultiColumn = true;
+            this.NetDirectoryList.Name = "NetDirectoryList";
+            this.NetDirectoryList.Size = new System.Drawing.Size(1290, 553);
+            this.NetDirectoryList.TabIndex = 0;
+            this.NetDirectoryList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NetDirectoryList_MouseDoubleClick);
+            // 
             // SettingsTab
             // 
             this.SettingsTab.BackColor = System.Drawing.Color.GhostWhite;
@@ -490,6 +518,7 @@
             this.IconsList.Images.SetKeyName(53, "start.png");
             this.IconsList.Images.SetKeyName(54, "stop-sign.png");
             this.IconsList.Images.SetKeyName(55, "computer.png");
+            this.IconsList.Images.SetKeyName(56, "diagram.png");
             // 
             // MainMenu
             // 
@@ -588,25 +617,6 @@
             this.RefreshBtn.Text = "Refresh";
             this.RefreshBtn.Click += new System.EventHandler(this.RefreshBtn_Click);
             // 
-            // NetFolderTab
-            // 
-            this.NetFolderTab.Controls.Add(this.listBox1);
-            this.NetFolderTab.Location = new System.Drawing.Point(4, 54);
-            this.NetFolderTab.Name = "NetFolderTab";
-            this.NetFolderTab.Size = new System.Drawing.Size(1301, 571);
-            this.NetFolderTab.TabIndex = 4;
-            this.NetFolderTab.Text = "Net Folders";
-            this.NetFolderTab.UseVisualStyleBackColor = true;
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 20;
-            this.listBox1.Location = new System.Drawing.Point(3, 3);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(1290, 564);
-            this.listBox1.TabIndex = 0;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -629,13 +639,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.OutboxData)).EndInit();
             this.InboxTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.InboxData)).EndInit();
+            this.NetFolderTab.ResumeLayout(false);
             this.SettingsTab.ResumeLayout(false);
             this.SettingsTab.PerformLayout();
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.NetFolderTab.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -688,7 +698,7 @@
         private System.Windows.Forms.Label To;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.TabPage NetFolderTab;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox NetDirectoryList;
     }
 }
 
