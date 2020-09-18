@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Net;
+using System.Net.NetworkInformation;
 
 namespace CMail
 {
@@ -22,6 +23,7 @@ namespace CMail
         private static string outboxPath = @"d:\Почта\!ОТПРАВКА НА ЛУГАНСК\";
         private static string tmailPath = @"C:\t-mailip\BOXES\V8001000.00\";
         public List<Computers> DeserializedComputers { get; set; }
+        public List<Computers> DisplayedComputers { get; set; }
         public MainForm()
         {
             InitializeComponent();
@@ -32,8 +34,13 @@ namespace CMail
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            departmentNum.SelectedIndex = 0;
             InitNetDirectory();
+            departmentNum.SelectedIndex = 0;
+            ProgressBar.Visible = false;
+            ProgressBar.Minimum = 1;
+            ProgressBar.Maximum = NetDirectoryList.Items.Count;
+            ProgressBar.Value = 1;
+            ProgressBar.Step = 1;
         }
 
         private void OutboxFilesScan()
@@ -45,7 +52,6 @@ namespace CMail
                 FileInfo fileInfo = new FileInfo(file);
                 FilesToSendList.Items.Add(fileInfo.Name);
             }
-
         }
 
         public void Watch(string path, bool isInbox)
@@ -580,6 +586,96 @@ namespace CMail
             Process.Start(@"\\" + Dns.GetHostEntry(computerName).AddressList.Where(ip =>
                             ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToList()[0].ToString());
 
+        }
+
+        public bool IsIPOnline(string ip)
+        {
+            try
+            {
+                Ping MyPing = new Ping();
+                PingReply reply = MyPing.Send(ip);
+                if (reply != null)
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            return false;
+        }
+
+        private void PingBtn_Click(object sender, EventArgs e)
+        {
+            NetDirectoryList.Items.Clear();
+            ProgressBar.Visible = true;
+            foreach (var computer in DeserializedComputers)
+            {
+                ProgressBar.PerformStep();
+                if (IsIPOnline(computer.IPAdress))
+                {
+                    NetDirectoryList.Items.Add(computer.Name);
+                }
+            }
+
+            ProgressBar.Value = 1;
+            ProgressBar.Visible = false;
+        }
+
+        public void SetComputerList()
+        {
+            DirectoryEntry root = new DirectoryEntry("WinNT:");
+            List<Computers> ComputerList = new List<Computers>();
+
+
+            foreach (DirectoryEntry computers in root.Children)
+            {
+                foreach (DirectoryEntry computer in computers.Children)
+                {
+                    if (computer.Name != "Schema" && computer.SchemaClassName == "Computer")
+                    {
+                        try
+                        {
+                            ComputerList.Add(new Computers()
+                            {
+                                IPAdress = Dns.GetHostEntry(computer.Name).AddressList.Where(ip =>
+                                ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToList()[0].ToString(),
+                                Name = computer.Name,
+                                ID = computer.GetHashCode().ToString(),
+                            }); ;
+                        }
+                        catch (System.Net.Sockets.SocketException)
+                        {
+                            ComputerList.Add(new Computers()
+                            {
+                                Name = computer.Name,
+                                IPAdress = null,
+                                ID = computer.GetHashCode().ToString(),
+                            });
+                        }
+                    }
+                }
+            }
+            DisplayedComputers = ComputerList;
+        }
+
+        public void UpdateNetwork()
+        {
+            SetComputerList();
+            JsonSerializer serializer = new JsonSerializer();
+            using (StreamWriter sw = new StreamWriter(@"d:\computers.json"))
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                serializer.Serialize(writer, DisplayedComputers);
+            }
+        }
+
+        private void UpdateNetworkBtn_Click(object sender, EventArgs e)
+        {
+            NetDirectoryList.Items.Clear();
+            UpdateNetwork();
+            InitNetDirectory();
         }
     }
 }

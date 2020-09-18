@@ -58,6 +58,7 @@
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FileSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NetFolderTab = new System.Windows.Forms.TabPage();
+            this.PingBtn = new System.Windows.Forms.Button();
             this.NetDirectoryList = new System.Windows.Forms.ListBox();
             this.SettingsTab = new System.Windows.Forms.TabPage();
             this.ToTextBox1 = new System.Windows.Forms.TextBox();
@@ -77,6 +78,8 @@
             this.StartTool = new System.Windows.Forms.ToolStripButton();
             this.StopTool = new System.Windows.Forms.ToolStripButton();
             this.RefreshBtn = new System.Windows.Forms.ToolStripButton();
+            this.ProgressBar = new System.Windows.Forms.ProgressBar();
+            this.UpdateNetworkBtn = new System.Windows.Forms.Button();
             this.MailTab.SuspendLayout();
             this.OutboxTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OutboxData)).BeginInit();
@@ -369,6 +372,8 @@
             // 
             // NetFolderTab
             // 
+            this.NetFolderTab.Controls.Add(this.UpdateNetworkBtn);
+            this.NetFolderTab.Controls.Add(this.PingBtn);
             this.NetFolderTab.Controls.Add(this.NetDirectoryList);
             this.NetFolderTab.ImageKey = "diagram.png";
             this.NetFolderTab.Location = new System.Drawing.Point(4, 54);
@@ -377,6 +382,17 @@
             this.NetFolderTab.TabIndex = 4;
             this.NetFolderTab.Text = "Network";
             this.NetFolderTab.UseVisualStyleBackColor = true;
+            // 
+            // PingBtn
+            // 
+            this.PingBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.PingBtn.Location = new System.Drawing.Point(9, 3);
+            this.PingBtn.Name = "PingBtn";
+            this.PingBtn.Size = new System.Drawing.Size(107, 64);
+            this.PingBtn.TabIndex = 1;
+            this.PingBtn.Text = "Ping";
+            this.PingBtn.UseVisualStyleBackColor = true;
+            this.PingBtn.Click += new System.EventHandler(this.PingBtn_Click);
             // 
             // NetDirectoryList
             // 
@@ -388,10 +404,10 @@
             this.NetDirectoryList.Font = new System.Drawing.Font("Arial Narrow", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.NetDirectoryList.FormattingEnabled = true;
             this.NetDirectoryList.ItemHeight = 29;
-            this.NetDirectoryList.Location = new System.Drawing.Point(3, 3);
+            this.NetDirectoryList.Location = new System.Drawing.Point(122, 3);
             this.NetDirectoryList.MultiColumn = true;
             this.NetDirectoryList.Name = "NetDirectoryList";
-            this.NetDirectoryList.Size = new System.Drawing.Size(1290, 553);
+            this.NetDirectoryList.Size = new System.Drawing.Size(1171, 553);
             this.NetDirectoryList.TabIndex = 0;
             this.NetDirectoryList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NetDirectoryList_MouseDoubleClick);
             // 
@@ -617,12 +633,33 @@
             this.RefreshBtn.Text = "Refresh";
             this.RefreshBtn.Click += new System.EventHandler(this.RefreshBtn_Click);
             // 
+            // ProgressBar
+            // 
+            this.ProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ProgressBar.Location = new System.Drawing.Point(308, 12);
+            this.ProgressBar.Name = "ProgressBar";
+            this.ProgressBar.Size = new System.Drawing.Size(989, 23);
+            this.ProgressBar.TabIndex = 7;
+            // 
+            // UpdateNetworkBtn
+            // 
+            this.UpdateNetworkBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateNetworkBtn.Location = new System.Drawing.Point(9, 74);
+            this.UpdateNetworkBtn.Name = "UpdateNetworkBtn";
+            this.UpdateNetworkBtn.Size = new System.Drawing.Size(107, 68);
+            this.UpdateNetworkBtn.TabIndex = 2;
+            this.UpdateNetworkBtn.Text = "Update";
+            this.UpdateNetworkBtn.UseVisualStyleBackColor = true;
+            this.UpdateNetworkBtn.Click += new System.EventHandler(this.UpdateNetworkBtn_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1309, 714);
+            this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.MailTab);
             this.Controls.Add(this.MainMenu);
@@ -699,6 +736,9 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.TabPage NetFolderTab;
         private System.Windows.Forms.ListBox NetDirectoryList;
+        private System.Windows.Forms.ProgressBar ProgressBar;
+        private System.Windows.Forms.Button PingBtn;
+        private System.Windows.Forms.Button UpdateNetworkBtn;
     }
 }
 
