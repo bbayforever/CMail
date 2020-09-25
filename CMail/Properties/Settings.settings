@@ -1,7 +1,30 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CMail.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="InboxFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\t-mailip\files\</Value>
+    </Setting>
+    <Setting Name="OutboxFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\t-mailip\BOXES\V8001000.00\</Value>
+    </Setting>
+    <Setting Name="DelovodFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">m:\POST\Inbox\</Value>
+    </Setting>
+    <Setting Name="InboxArchiveFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d:\!!LUGANSK\Входящие\</Value>
+    </Setting>
+    <Setting Name="OutboxArchiveFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d:\!!LUGANSK\Исходящие\</Value>
+    </Setting>
+    <Setting Name="OutboxNotkillFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\t-mailip\BOXES\V8001000.00\Notkill\</Value>
+    </Setting>
+    <Setting Name="ComputersInfoJSON" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d:\computers.json</Value>
+    </Setting>
+    <Setting Name="OutboxSendingFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d:\Почта\!ОТПРАВКА НА ЛУГАНСК\</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

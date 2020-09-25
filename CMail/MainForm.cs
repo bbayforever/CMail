@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Configuration;
+using CMail.Properties;
 
 namespace CMail
 {
@@ -20,9 +22,10 @@ namespace CMail
     {
         private bool IsStarted = false;
         private static string numberPattern = "{0}";
-        private static string outboxPath = @"d:\Почта\!ОТПРАВКА НА ЛУГАНСК\";
-        private static string tmailPath = @"C:\t-mailip\BOXES\V8001000.00\";
         public List<Computers> DeserializedComputers { get; set; }
+
+        public Dictionary<int, string> Specialists = new Dictionary<int, string>();
+        
         public List<Computers> DisplayedComputers { get; set; }
         public MainForm()
         {
@@ -31,7 +34,6 @@ namespace CMail
             FilesToSendList.DragEnter += new DragEventHandler(FilesToSendList_DragEnter);
             FilesToSendList.DragDrop += new DragEventHandler(FilesToSendList_DragDrop);
         }
-
         private void MainForm_Load(object sender, EventArgs e)
         {
             InitNetDirectory();
@@ -41,12 +43,22 @@ namespace CMail
             ProgressBar.Maximum = NetDirectoryList.Items.Count;
             ProgressBar.Value = 1;
             ProgressBar.Step = 1;
+
+            IBFolderSettings.Text = Settings.Default.InboxFolder.ToString();
+            IBAFolderSettings.Text = Settings.Default.InboxArchiveFolder.ToString();
+            OrgFolderSettings.Text = Settings.Default.DelovodFolder.ToString();
+            OBFolderSettings.Text = Settings.Default.OutboxFolder.ToString();
+            OBNKFolderSettings.Text = Settings.Default.OutboxNotkillFolder.ToString();
+            FilesOutFolderSettings.Text = Settings.Default.OutboxSendingFolder.ToString();
+            OABFolderSettings.Text = Settings.Default.OutboxArchiveFolder.ToString();
+            CompInfoSettings.Text = Settings.Default.ComputersInfoJSON.ToString();
+
         }
 
         private void OutboxFilesScan()
         {
             FilesToSendList.Items.Clear();
-            string[] outboxFiles = Directory.GetFiles(outboxPath);
+            string[] outboxFiles = Directory.GetFiles(Settings.Default.OutboxSendingFolder.ToString());
             foreach (string file in outboxFiles)
             {
                 FileInfo fileInfo = new FileInfo(file);
@@ -86,8 +98,7 @@ namespace CMail
 
         public void FileSystemWatcherInbox_Created(object source, FileSystemEventArgs e)
         {
-            string currDateDirectory1 = ToTextBox1.Text + DateTime.Now.ToString("dd-MM") + @"\";
-            string currDateDirectory2 = ToTextBox2.Text;
+            string currDateDirectory1 = Settings.Default.InboxArchiveFolder.ToString() + DateTime.Now.ToString("dd-MM") + @"\";
             FileInfo CreatedFile = new FileInfo(e.FullPath);
             if (!IsFileLocked(CreatedFile) && CreatedFile.Extension.ToLower() != ".tmp" &&
                 CreatedFile.Length != 0 &&
@@ -96,7 +107,7 @@ namespace CMail
             {
                 FillDataGrid(CreatedFile, true);
                 System.IO.File.Copy(e.FullPath, currDateDirectory1 + e.Name, true);
-                System.IO.File.Copy(e.FullPath, currDateDirectory2 + e.Name, true);
+                System.IO.File.Copy(e.FullPath, Settings.Default.DelovodFolder.ToString() + e.Name, true);
                 System.IO.File.Delete(e.FullPath);
             }
         }
@@ -389,26 +400,20 @@ namespace CMail
             IsStarted = true;
             StartTool.Enabled = false;
             StopTool.Enabled = true;
-            FromInbox.Enabled = false;
-            ToTextBox1.Enabled = false;
-            ToTextBox2.Enabled = false;
-            Directory.CreateDirectory(ToTextBox1.Text + DateTime.Now.ToString("dd-MM"));
-            CopyFolderInbox(FromInbox.Text, ToTextBox1.Text, ToTextBox2.Text);
+            Directory.CreateDirectory(Settings.Default.InboxArchiveFolder.ToString() + DateTime.Now.ToString("dd-MM"));
+            CopyFolderInbox(Settings.Default.InboxFolder, Settings.Default.InboxArchiveFolder.ToString(), Settings.Default.DelovodFolder.ToString());
             OutboxFilesScan();
-            Watch(FromInbox.Text, true);
-            Watch(outboxPath, false);
+            Watch(Settings.Default.InboxFolder.ToString(), true);
+            Watch(Settings.Default.OutboxSendingFolder.ToString(), false);
         }
 
         private void StopTool_Click(object sender, EventArgs e)
         {
             IsStarted = false;
-            FromInbox.Enabled = true;
-            ToTextBox1.Enabled = true;
-            ToTextBox2.Enabled = true;
             StartTool.Enabled = true;
             StopTool.Enabled = false;
-            Watch(FromInbox.Text, true);
-            Watch(FromInbox.Text, false);
+            Watch(Settings.Default.InboxFolder.ToString(), true);
+            Watch(Settings.Default.OutboxSendingFolder.ToString(), false);
         }
 
         private void RefreshOutboxBtn_Click(object sender, EventArgs e)
@@ -423,12 +428,12 @@ namespace CMail
                 case "OutboxTab":
                     OutboxFilesScan();
                     OutboxData.Rows.Clear();
-                    ScanFolder(tmailPath + @"Notkill\", false);
+                    ScanFolder(Settings.Default.OutboxNotkillFolder.ToString(), false);
                     break;
 
                 case "InboxTab":
                     InboxData.Rows.Clear();
-                    ScanFolder(@"d:\!!LUGANSK\Входящие\" + DateTime.Now.ToString("dd-MM"), true);
+                    ScanFolder(Settings.Default.InboxArchiveFolder.ToString() + DateTime.Now.ToString("dd-MM"), true);
                     break;
 
                 default:
@@ -469,7 +474,7 @@ namespace CMail
             string fileCode = " ";
             string filename = path;
             int counter = 1;
-            string extension = Path.GetExtension(filename);
+            string extension = Path.GetExtension(filename).ToLower();
             if (extension == ".jpg" || extension == ".pdf")
             {
                 fileCode = "g" + departmentNum.SelectedItem +
@@ -498,29 +503,30 @@ namespace CMail
                             counter.ToString() +
                             ".05" + extension;
             }
-            File.Copy(filename, RenameExistedFile(outboxPath + fileCode));
+            File.Copy(filename, RenameExistedFile(Settings.Default.OutboxSendingFolder.ToString() + fileCode));
         }
 
         private void SendOutbox(string fileName)
         {
             if (fileName != null)
             {
-                string path = outboxPath + fileName;
-                string copyPath = tmailPath + @"Notkill\" + fileName;
+                string path = Settings.Default.OutboxSendingFolder.ToString() + fileName;
+                string copyPath = Settings.Default.OutboxNotkillFolder.ToString() + fileName;
 
                 if (System.IO.File.Exists(copyPath))
                 {
                     DialogResult dialogResult = MessageBox.Show("A file " + fileName + " with the same name already exists. Replace? ", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (dialogResult == DialogResult.No)
                     {
-                        copyPath = RenameExistedFile(tmailPath + @"Notkill\" + fileName);
+                        copyPath = RenameExistedFile(Settings.Default.OutboxNotkillFolder.ToString() + fileName);
                     }
                 }
 
                 System.IO.File.Copy(path, copyPath, true);
-                FileInfo fileInfo = new FileInfo(copyPath);
+                FileInfo fileInfo = new FileInfo(path);
                 FillDataGrid(fileInfo, false);
-                System.IO.File.Copy(path, tmailPath + Path.GetFileName(copyPath), true);
+                System.IO.File.Copy(path, Settings.Default.OutboxFolder.ToString()
+                    + Path.GetFileName(copyPath), true);
                 System.IO.File.Delete(path);
             }
         }
@@ -552,7 +558,7 @@ namespace CMail
 
         private void InitNetDirectory()
         {
-            using (StreamReader sr = new StreamReader(@"d:\computers.json"))
+            using (StreamReader sr = new StreamReader(Settings.Default.ComputersInfoJSON.ToString()))
             {
                 string json = sr.ReadToEnd();
                 DeserializedComputers = JsonConvert.DeserializeObject<List<Computers>>(json);
@@ -664,7 +670,7 @@ namespace CMail
         {
             SetComputerList();
             JsonSerializer serializer = new JsonSerializer();
-            using (StreamWriter sw = new StreamWriter(@"d:\computers.json"))
+            using (StreamWriter sw = new StreamWriter(Settings.Default.ComputersInfoJSON.ToString()))
             using (JsonWriter writer = new JsonTextWriter(sw))
             {
                 serializer.Serialize(writer, DisplayedComputers);
@@ -676,6 +682,72 @@ namespace CMail
             NetDirectoryList.Items.Clear();
             UpdateNetwork();
             InitNetDirectory();
+        }
+
+        private void SaveSettingsBtn_Click(object sender, EventArgs e)
+        {
+            Settings.Default.ComputersInfoJSON = CompInfoSettings.Text;
+            Settings.Default.OutboxArchiveFolder = OABFolderSettings.Text;
+            Settings.Default.OutboxSendingFolder = FilesOutFolderSettings.Text;
+            Settings.Default.OutboxNotkillFolder = OBNKFolderSettings.Text;
+            Settings.Default.OutboxFolder = OBFolderSettings.Text;
+            Settings.Default.DelovodFolder = OrgFolderSettings.Text;
+            Settings.Default.InboxArchiveFolder = IBAFolderSettings.Text;
+            Settings.Default.InboxFolder = IBFolderSettings.Text;
+        }
+
+        private void SetFolderSettings(TextBox tb)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                tb.Text = fbd.SelectedPath;
+            }
+        }
+
+        private void IBFSetBtn_Click(object sender, EventArgs e)
+        {
+            SetFolderSettings(IBFolderSettings);
+        }
+
+        private void IBASetFolderBtn_Click(object sender, EventArgs e)
+        {
+            SetFolderSettings(IBAFolderSettings);
+        }
+
+        private void SetOrgFolderBtn_Click(object sender, EventArgs e)
+        {
+            SetFolderSettings(OrgFolderSettings);
+        }
+
+        private void SetOBFolderBtn_Click(object sender, EventArgs e)
+        {
+            SetFolderSettings(OBFolderSettings);
+        }
+
+        private void SetOBNFolderBtn_Click(object sender, EventArgs e)
+        {
+            SetFolderSettings(OBNKFolderSettings);
+        }
+
+        private void SetFTSBtn_Click(object sender, EventArgs e)
+        {
+            SetFolderSettings(FilesOutFolderSettings);
+        }
+
+        private void SetOBAFolderBtn_Click(object sender, EventArgs e)
+        {
+            SetFolderSettings(OABFolderSettings);
+        }
+
+        private void SetCompJSONBtn_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                CompInfoSettings.Text = ofd.FileName;
+            }
         }
     }
 }

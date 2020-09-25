@@ -58,14 +58,35 @@
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FileSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NetFolderTab = new System.Windows.Forms.TabPage();
+            this.UpdateNetworkBtn = new System.Windows.Forms.Button();
             this.PingBtn = new System.Windows.Forms.Button();
             this.NetDirectoryList = new System.Windows.Forms.ListBox();
             this.SettingsTab = new System.Windows.Forms.TabPage();
-            this.ToTextBox1 = new System.Windows.Forms.TextBox();
-            this.ToTextBox2 = new System.Windows.Forms.TextBox();
-            this.From = new System.Windows.Forms.Label();
-            this.FromInbox = new System.Windows.Forms.TextBox();
-            this.To = new System.Windows.Forms.Label();
+            this.SaveSettingsBtn = new System.Windows.Forms.Button();
+            this.SetOBAFolderBtn = new System.Windows.Forms.Button();
+            this.SetOrgFolderBtn = new System.Windows.Forms.Button();
+            this.SetOBNFolderBtn = new System.Windows.Forms.Button();
+            this.IBFSetBtn = new System.Windows.Forms.Button();
+            this.SetCompJSONBtn = new System.Windows.Forms.Button();
+            this.SetOBFolderBtn = new System.Windows.Forms.Button();
+            this.SetFTSBtn = new System.Windows.Forms.Button();
+            this.IBASetFolderBtn = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.OABFolderSettings = new System.Windows.Forms.TextBox();
+            this.OrgFolderSettings = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.OBNKFolderSettings = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.CompInfoSettings = new System.Windows.Forms.TextBox();
+            this.IBFolderSettings = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.OBFolderSettings = new System.Windows.Forms.TextBox();
+            this.FilesOutFolderSettings = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.IBAFolderSettings = new System.Windows.Forms.TextBox();
             this.IconsList = new System.Windows.Forms.ImageList(this.components);
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.ClearMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,7 +100,6 @@
             this.StopTool = new System.Windows.Forms.ToolStripButton();
             this.RefreshBtn = new System.Windows.Forms.ToolStripButton();
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
-            this.UpdateNetworkBtn = new System.Windows.Forms.Button();
             this.MailTab.SuspendLayout();
             this.OutboxTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OutboxData)).BeginInit();
@@ -383,6 +403,17 @@
             this.NetFolderTab.Text = "Network";
             this.NetFolderTab.UseVisualStyleBackColor = true;
             // 
+            // UpdateNetworkBtn
+            // 
+            this.UpdateNetworkBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateNetworkBtn.Location = new System.Drawing.Point(9, 74);
+            this.UpdateNetworkBtn.Name = "UpdateNetworkBtn";
+            this.UpdateNetworkBtn.Size = new System.Drawing.Size(107, 68);
+            this.UpdateNetworkBtn.TabIndex = 2;
+            this.UpdateNetworkBtn.Text = "Update";
+            this.UpdateNetworkBtn.UseVisualStyleBackColor = true;
+            this.UpdateNetworkBtn.Click += new System.EventHandler(this.UpdateNetworkBtn_Click);
+            // 
             // PingBtn
             // 
             this.PingBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -414,11 +445,31 @@
             // SettingsTab
             // 
             this.SettingsTab.BackColor = System.Drawing.Color.GhostWhite;
-            this.SettingsTab.Controls.Add(this.ToTextBox1);
-            this.SettingsTab.Controls.Add(this.ToTextBox2);
-            this.SettingsTab.Controls.Add(this.From);
-            this.SettingsTab.Controls.Add(this.FromInbox);
-            this.SettingsTab.Controls.Add(this.To);
+            this.SettingsTab.Controls.Add(this.SaveSettingsBtn);
+            this.SettingsTab.Controls.Add(this.SetOBAFolderBtn);
+            this.SettingsTab.Controls.Add(this.SetOrgFolderBtn);
+            this.SettingsTab.Controls.Add(this.SetOBNFolderBtn);
+            this.SettingsTab.Controls.Add(this.IBFSetBtn);
+            this.SettingsTab.Controls.Add(this.SetCompJSONBtn);
+            this.SettingsTab.Controls.Add(this.SetOBFolderBtn);
+            this.SettingsTab.Controls.Add(this.SetFTSBtn);
+            this.SettingsTab.Controls.Add(this.IBASetFolderBtn);
+            this.SettingsTab.Controls.Add(this.label9);
+            this.SettingsTab.Controls.Add(this.label5);
+            this.SettingsTab.Controls.Add(this.OABFolderSettings);
+            this.SettingsTab.Controls.Add(this.OrgFolderSettings);
+            this.SettingsTab.Controls.Add(this.label8);
+            this.SettingsTab.Controls.Add(this.label7);
+            this.SettingsTab.Controls.Add(this.label2);
+            this.SettingsTab.Controls.Add(this.OBNKFolderSettings);
+            this.SettingsTab.Controls.Add(this.label3);
+            this.SettingsTab.Controls.Add(this.CompInfoSettings);
+            this.SettingsTab.Controls.Add(this.IBFolderSettings);
+            this.SettingsTab.Controls.Add(this.label6);
+            this.SettingsTab.Controls.Add(this.OBFolderSettings);
+            this.SettingsTab.Controls.Add(this.FilesOutFolderSettings);
+            this.SettingsTab.Controls.Add(this.label1);
+            this.SettingsTab.Controls.Add(this.IBAFolderSettings);
             this.SettingsTab.ImageKey = "computer.png";
             this.SettingsTab.Location = new System.Drawing.Point(4, 54);
             this.SettingsTab.Name = "SettingsTab";
@@ -426,53 +477,240 @@
             this.SettingsTab.TabIndex = 3;
             this.SettingsTab.Text = "Settings";
             // 
-            // ToTextBox1
+            // SaveSettingsBtn
             // 
-            this.ToTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ToTextBox1.Location = new System.Drawing.Point(61, 59);
-            this.ToTextBox1.Name = "ToTextBox1";
-            this.ToTextBox1.Size = new System.Drawing.Size(231, 26);
-            this.ToTextBox1.TabIndex = 9;
-            this.ToTextBox1.Text = "d:\\!!LUGANSK\\Входящие\\";
+            this.SaveSettingsBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SaveSettingsBtn.Location = new System.Drawing.Point(9, 433);
+            this.SaveSettingsBtn.Name = "SaveSettingsBtn";
+            this.SaveSettingsBtn.Size = new System.Drawing.Size(397, 32);
+            this.SaveSettingsBtn.TabIndex = 3;
+            this.SaveSettingsBtn.Text = "Save settings";
+            this.SaveSettingsBtn.UseVisualStyleBackColor = true;
+            this.SaveSettingsBtn.Click += new System.EventHandler(this.SaveSettingsBtn_Click);
             // 
-            // ToTextBox2
+            // SetOBAFolderBtn
             // 
-            this.ToTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ToTextBox2.Location = new System.Drawing.Point(61, 91);
-            this.ToTextBox2.Name = "ToTextBox2";
-            this.ToTextBox2.Size = new System.Drawing.Size(231, 26);
-            this.ToTextBox2.TabIndex = 10;
-            this.ToTextBox2.Text = "m:\\POST\\Inbox\\";
+            this.SetOBAFolderBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SetOBAFolderBtn.Location = new System.Drawing.Point(297, 347);
+            this.SetOBAFolderBtn.Name = "SetOBAFolderBtn";
+            this.SetOBAFolderBtn.Size = new System.Drawing.Size(117, 26);
+            this.SetOBAFolderBtn.TabIndex = 2;
+            this.SetOBAFolderBtn.Text = "Choose folder...";
+            this.SetOBAFolderBtn.UseVisualStyleBackColor = true;
+            this.SetOBAFolderBtn.Click += new System.EventHandler(this.SetOBAFolderBtn_Click);
             // 
-            // From
+            // SetOrgFolderBtn
             // 
-            this.From.AutoSize = true;
-            this.From.Location = new System.Drawing.Point(9, 11);
-            this.From.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.From.Name = "From";
-            this.From.Size = new System.Drawing.Size(44, 20);
-            this.From.TabIndex = 7;
-            this.From.Text = "From:";
+            this.SetOrgFolderBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SetOrgFolderBtn.Location = new System.Drawing.Point(297, 137);
+            this.SetOrgFolderBtn.Name = "SetOrgFolderBtn";
+            this.SetOrgFolderBtn.Size = new System.Drawing.Size(117, 26);
+            this.SetOrgFolderBtn.TabIndex = 2;
+            this.SetOrgFolderBtn.Text = "Choose folder...";
+            this.SetOrgFolderBtn.UseVisualStyleBackColor = true;
+            this.SetOrgFolderBtn.Click += new System.EventHandler(this.SetOrgFolderBtn_Click);
             // 
-            // FromInbox
+            // SetOBNFolderBtn
             // 
-            this.FromInbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.FromInbox.Location = new System.Drawing.Point(61, 9);
-            this.FromInbox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.FromInbox.Name = "FromInbox";
-            this.FromInbox.Size = new System.Drawing.Size(215, 26);
-            this.FromInbox.TabIndex = 6;
-            this.FromInbox.Text = "c:\\t-mailip\\files\\";
+            this.SetOBNFolderBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SetOBNFolderBtn.Location = new System.Drawing.Point(297, 242);
+            this.SetOBNFolderBtn.Name = "SetOBNFolderBtn";
+            this.SetOBNFolderBtn.Size = new System.Drawing.Size(117, 26);
+            this.SetOBNFolderBtn.TabIndex = 2;
+            this.SetOBNFolderBtn.Text = "Choose folder...";
+            this.SetOBNFolderBtn.UseVisualStyleBackColor = true;
+            this.SetOBNFolderBtn.Click += new System.EventHandler(this.SetOBNFolderBtn_Click);
             // 
-            // To
+            // IBFSetBtn
             // 
-            this.To.AutoSize = true;
-            this.To.Location = new System.Drawing.Point(9, 62);
-            this.To.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.To.Name = "To";
-            this.To.Size = new System.Drawing.Size(28, 20);
-            this.To.TabIndex = 8;
-            this.To.Text = "To:";
+            this.IBFSetBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.IBFSetBtn.Location = new System.Drawing.Point(297, 32);
+            this.IBFSetBtn.Name = "IBFSetBtn";
+            this.IBFSetBtn.Size = new System.Drawing.Size(117, 26);
+            this.IBFSetBtn.TabIndex = 2;
+            this.IBFSetBtn.Text = "Choose folder...";
+            this.IBFSetBtn.UseVisualStyleBackColor = true;
+            this.IBFSetBtn.Click += new System.EventHandler(this.IBFSetBtn_Click);
+            // 
+            // SetCompJSONBtn
+            // 
+            this.SetCompJSONBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SetCompJSONBtn.Location = new System.Drawing.Point(297, 400);
+            this.SetCompJSONBtn.Name = "SetCompJSONBtn";
+            this.SetCompJSONBtn.Size = new System.Drawing.Size(117, 26);
+            this.SetCompJSONBtn.TabIndex = 2;
+            this.SetCompJSONBtn.Text = "Choose folder...";
+            this.SetCompJSONBtn.UseVisualStyleBackColor = true;
+            this.SetCompJSONBtn.Click += new System.EventHandler(this.SetCompJSONBtn_Click);
+            // 
+            // SetOBFolderBtn
+            // 
+            this.SetOBFolderBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SetOBFolderBtn.Location = new System.Drawing.Point(297, 190);
+            this.SetOBFolderBtn.Name = "SetOBFolderBtn";
+            this.SetOBFolderBtn.Size = new System.Drawing.Size(117, 26);
+            this.SetOBFolderBtn.TabIndex = 2;
+            this.SetOBFolderBtn.Text = "Choose folder...";
+            this.SetOBFolderBtn.UseVisualStyleBackColor = true;
+            this.SetOBFolderBtn.Click += new System.EventHandler(this.SetOBFolderBtn_Click);
+            // 
+            // SetFTSBtn
+            // 
+            this.SetFTSBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SetFTSBtn.Location = new System.Drawing.Point(297, 295);
+            this.SetFTSBtn.Name = "SetFTSBtn";
+            this.SetFTSBtn.Size = new System.Drawing.Size(117, 26);
+            this.SetFTSBtn.TabIndex = 2;
+            this.SetFTSBtn.Text = "Choose folder...";
+            this.SetFTSBtn.UseVisualStyleBackColor = true;
+            this.SetFTSBtn.Click += new System.EventHandler(this.SetFTSBtn_Click);
+            // 
+            // IBASetFolderBtn
+            // 
+            this.IBASetFolderBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.IBASetFolderBtn.Location = new System.Drawing.Point(297, 85);
+            this.IBASetFolderBtn.Name = "IBASetFolderBtn";
+            this.IBASetFolderBtn.Size = new System.Drawing.Size(117, 26);
+            this.IBASetFolderBtn.TabIndex = 2;
+            this.IBASetFolderBtn.Text = "Choose folder...";
+            this.IBASetFolderBtn.UseVisualStyleBackColor = true;
+            this.IBASetFolderBtn.Click += new System.EventHandler(this.IBASetFolderBtn_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(8, 324);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(137, 20);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "Outbox archive folder";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 114);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(69, 20);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Org folder";
+            // 
+            // OABFolderSettings
+            // 
+            this.OABFolderSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.OABFolderSettings.Location = new System.Drawing.Point(8, 347);
+            this.OABFolderSettings.Name = "OABFolderSettings";
+            this.OABFolderSettings.Size = new System.Drawing.Size(282, 26);
+            this.OABFolderSettings.TabIndex = 0;
+            // 
+            // OrgFolderSettings
+            // 
+            this.OrgFolderSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.OrgFolderSettings.Location = new System.Drawing.Point(8, 137);
+            this.OrgFolderSettings.Name = "OrgFolderSettings";
+            this.OrgFolderSettings.Size = new System.Drawing.Size(282, 26);
+            this.OrgFolderSettings.TabIndex = 0;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(8, 219);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(138, 20);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Outbox \"notkill\" folder";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(8, 377);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(201, 20);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "Computers information(*json file)";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(80, 20);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Inbox folder";
+            // 
+            // OBNKFolderSettings
+            // 
+            this.OBNKFolderSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.OBNKFolderSettings.Location = new System.Drawing.Point(8, 242);
+            this.OBNKFolderSettings.Name = "OBNKFolderSettings";
+            this.OBNKFolderSettings.Size = new System.Drawing.Size(282, 26);
+            this.OBNKFolderSettings.TabIndex = 0;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 167);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(90, 20);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Outbox folder";
+            // 
+            // CompInfoSettings
+            // 
+            this.CompInfoSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CompInfoSettings.Location = new System.Drawing.Point(8, 400);
+            this.CompInfoSettings.Name = "CompInfoSettings";
+            this.CompInfoSettings.Size = new System.Drawing.Size(282, 26);
+            this.CompInfoSettings.TabIndex = 0;
+            // 
+            // IBFolderSettings
+            // 
+            this.IBFolderSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.IBFolderSettings.Location = new System.Drawing.Point(8, 32);
+            this.IBFolderSettings.Name = "IBFolderSettings";
+            this.IBFolderSettings.Size = new System.Drawing.Size(282, 26);
+            this.IBFolderSettings.TabIndex = 0;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(8, 272);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(125, 20);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Files to send folder";
+            // 
+            // OBFolderSettings
+            // 
+            this.OBFolderSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.OBFolderSettings.Location = new System.Drawing.Point(8, 190);
+            this.OBFolderSettings.Name = "OBFolderSettings";
+            this.OBFolderSettings.Size = new System.Drawing.Size(282, 26);
+            this.OBFolderSettings.TabIndex = 0;
+            // 
+            // FilesOutFolderSettings
+            // 
+            this.FilesOutFolderSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.FilesOutFolderSettings.Location = new System.Drawing.Point(8, 295);
+            this.FilesOutFolderSettings.Name = "FilesOutFolderSettings";
+            this.FilesOutFolderSettings.Size = new System.Drawing.Size(282, 26);
+            this.FilesOutFolderSettings.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 62);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(127, 20);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Inbox archive folder";
+            // 
+            // IBAFolderSettings
+            // 
+            this.IBAFolderSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.IBAFolderSettings.Location = new System.Drawing.Point(8, 85);
+            this.IBAFolderSettings.Name = "IBAFolderSettings";
+            this.IBAFolderSettings.Size = new System.Drawing.Size(282, 26);
+            this.IBAFolderSettings.TabIndex = 0;
             // 
             // IconsList
             // 
@@ -642,17 +880,6 @@
             this.ProgressBar.Size = new System.Drawing.Size(989, 23);
             this.ProgressBar.TabIndex = 7;
             // 
-            // UpdateNetworkBtn
-            // 
-            this.UpdateNetworkBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UpdateNetworkBtn.Location = new System.Drawing.Point(9, 74);
-            this.UpdateNetworkBtn.Name = "UpdateNetworkBtn";
-            this.UpdateNetworkBtn.Size = new System.Drawing.Size(107, 68);
-            this.UpdateNetworkBtn.TabIndex = 2;
-            this.UpdateNetworkBtn.Text = "Update";
-            this.UpdateNetworkBtn.UseVisualStyleBackColor = true;
-            this.UpdateNetworkBtn.Click += new System.EventHandler(this.UpdateNetworkBtn_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -728,17 +955,37 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FileName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
         private System.Windows.Forms.DataGridViewTextBoxColumn FileSize;
-        private System.Windows.Forms.TextBox ToTextBox1;
-        private System.Windows.Forms.TextBox ToTextBox2;
-        private System.Windows.Forms.Label From;
-        private System.Windows.Forms.TextBox FromInbox;
-        private System.Windows.Forms.Label To;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.TabPage NetFolderTab;
         private System.Windows.Forms.ListBox NetDirectoryList;
         private System.Windows.Forms.ProgressBar ProgressBar;
         private System.Windows.Forms.Button PingBtn;
         private System.Windows.Forms.Button UpdateNetworkBtn;
+        private System.Windows.Forms.TextBox IBAFolderSettings;
+        private System.Windows.Forms.Button SaveSettingsBtn;
+        private System.Windows.Forms.Button SetOBAFolderBtn;
+        private System.Windows.Forms.Button SetOrgFolderBtn;
+        private System.Windows.Forms.Button SetOBNFolderBtn;
+        private System.Windows.Forms.Button IBFSetBtn;
+        private System.Windows.Forms.Button SetCompJSONBtn;
+        private System.Windows.Forms.Button SetOBFolderBtn;
+        private System.Windows.Forms.Button SetFTSBtn;
+        private System.Windows.Forms.Button IBASetFolderBtn;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox OABFolderSettings;
+        private System.Windows.Forms.TextBox OrgFolderSettings;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox OBNKFolderSettings;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox CompInfoSettings;
+        private System.Windows.Forms.TextBox IBFolderSettings;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox OBFolderSettings;
+        private System.Windows.Forms.TextBox FilesOutFolderSettings;
+        private System.Windows.Forms.Label label1;
     }
 }
 
