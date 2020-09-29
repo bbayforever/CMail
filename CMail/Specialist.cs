@@ -12,7 +12,5 @@ namespace CMail
 
         [JsonProperty("department")]
         public string department { get; set; }
-
-
     }
 }

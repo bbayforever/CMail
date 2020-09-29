@@ -24,7 +24,28 @@ namespace CMail
         private static string numberPattern = "{0}";
         public List<Computers> DeserializedComputers { get; set; }
 
-        public Dictionary<int, string> Specialists = new Dictionary<int, string>();
+        Dictionary<string, string> specialist = new Dictionary<string, string>
+        {
+            ["work11"] = "Климова%05",
+            ["work29"] = "Денисенко%05",
+            ["work47"] = "Королева%06",
+            ["work48"] = "Миронкина%06",
+            ["del1"] = "Кузнецова%01",
+            ["del2"] = "Денисенко%01",
+            ["buh4"] = "Березникова%02",
+            ["buh5"] = "Агеева%02",
+            ["buh1"] = "Опольская%02",
+            ["kro1"] = "Климачева%04",
+            ["kro2"] = "Калюжная%04",
+            ["del3"] = "Ломакина%01",
+            ["pers1"] = "Дмитриенко%03",
+            ["jur3"] = "Андрош%08",
+            ["Alt"] = " % ",
+            ["Dim"] = "Шалько%07",
+
+
+        };
+
         
         public List<Computers> DisplayedComputers { get; set; }
         public MainForm()
@@ -223,6 +244,8 @@ namespace CMail
 
         private void FillDataGrid(FileInfo file, bool isInbox)
         {
+            string username = System.IO.File.GetAccessControl(file.FullName).
+                            GetOwner(typeof(System.Security.Principal.NTAccount)).ToString().Split('\\')[1];
             switch (isInbox)
             {
                 case true:
@@ -248,8 +271,9 @@ namespace CMail
                             file.CreationTime.ToString("HH-mm"),
                             "",
                             file.Name,
-                            "",
-                            System.IO.File.GetAccessControl(file.FullName).GetOwner(typeof(System.Security.Principal.NTAccount)).ToString(),
+                            specialist[username].Split('%')[1],
+                            specialist[username].Split('%')[0]
+                            ,
                             "");
                         OutboxData.Sort(TimeOutbox, ListSortDirection.Ascending);
                     }));
@@ -473,6 +497,7 @@ namespace CMail
         {
             string fileCode = " ";
             string filename = path;
+            string newpath = string.Empty;
             int counter = 1;
             string extension = Path.GetExtension(filename).ToLower();
             if (extension == ".jpg" || extension == ".pdf")
@@ -503,7 +528,10 @@ namespace CMail
                             counter.ToString() +
                             ".05" + extension;
             }
-            File.Copy(filename, RenameExistedFile(Settings.Default.OutboxSendingFolder.ToString() + fileCode));
+            newpath = RenameExistedFile(Settings.Default.OutboxSendingFolder.ToString() + fileCode);
+            File.Copy(filename, newpath);
+            //!!!!!!!!!!!!!!!!!!!!!!!!
+            //File.GetAccessControl(newpath).SetOwner()
         }
 
         private void SendOutbox(string fileName)
@@ -631,9 +659,8 @@ namespace CMail
 
         public void SetComputerList()
         {
-            DirectoryEntry root = new DirectoryEntry("WinNT:");
+            DirectoryEntry root = new DirectoryEntry("WinNT:", "Administrator", "derwas");
             List<Computers> ComputerList = new List<Computers>();
-
 
             foreach (DirectoryEntry computers in root.Children)
             {
@@ -646,10 +673,12 @@ namespace CMail
                             ComputerList.Add(new Computers()
                             {
                                 IPAdress = Dns.GetHostEntry(computer.Name).AddressList.Where(ip =>
-                                ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToList()[0].ToString(),
+                                ip.AddressFamily == System.Net.Sockets.
+                                AddressFamily.InterNetwork).ToList()[0].ToString(),
+
                                 Name = computer.Name,
                                 ID = computer.GetHashCode().ToString(),
-                            }); ;
+                            }); 
                         }
                         catch (System.Net.Sockets.SocketException)
                         {
